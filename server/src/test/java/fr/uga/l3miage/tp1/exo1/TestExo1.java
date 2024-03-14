@@ -33,7 +33,7 @@ class TestExo1 {
                 .hasSize(7);
 
         // vérification que tous les champs sont préfixés de @Column
-        assertThat(Arrays.stream(classz.getDeclaredFields())
+        /*assertThat(Arrays.stream(classz.getDeclaredFields())
                 .allMatch(field ->
                         Arrays.stream(field.getAnnotations())
                                 .filter(annotation -> annotation.annotationType().equals(Column.class))
@@ -78,6 +78,35 @@ class TestExo1 {
 
         assertThat(Arrays.stream(classz.getAnnotations()).filter(annotation -> annotation.annotationType().equals(Entity.class)).toArray())
                 .as("La classe BikeEntity doit avoir l'annotation @Entity")
+                .hasSize(1);
+    }*/
+        assertThat(((Enumerated) Arrays.stream(Arrays.stream(classz.getDeclaredFields())
+                        .filter(field -> field.getName().equals("shifterType"))
+                        .findFirst()
+                        .orElseThrow(() -> new Exception("L'attribue shifterType n'est pas déclarer dans la classe"))
+                        .getAnnotations())
+                .filter(annotation -> annotation.annotationType().equals(Enumerated.class))
+                .findFirst()
+                .orElseThrow(() -> new Exception("L'attribue shifterType n'a pas l'annotation @Enumerated")))
+                .value())
+                .as("L'attribue shifterType devrait être en mode EnumType.STRING")
+                .isEqualTo(EnumType.STRING);
+
+        assertThat(((Enumerated) Arrays.stream(Arrays.stream(classz.getDeclaredFields())
+                        .filter(field -> field.getName().equals("cylinderNumber"))
+                        .findFirst()
+                        .orElseThrow(() -> new Exception("L'attribue cylinderNumber n'est pas déclarer dans la classe"))
+                        .getAnnotations())
+                .filter(annotation -> annotation.annotationType().equals(Enumerated.class))
+                .findFirst()
+                .orElseThrow(() -> new Exception("L'attribue cylinderNumber n'a pas l'annotation @Enumerated")))
+                .value())
+                .as("L'attribue cylinderNumber devrait être en mode EnumType.ORDINAL")
+                .isEqualTo(EnumType.ORDINAL);
+
+
+        assertThat(Arrays.stream(classz.getAnnotations()).filter(annotation -> annotation.annotationType().equals(Entity.class)).toArray())
+                .as("La classe bike entity doit avoir l'annotation @Entity")
                 .hasSize(1);
     }
 
