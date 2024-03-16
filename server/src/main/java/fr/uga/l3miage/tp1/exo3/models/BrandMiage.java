@@ -15,11 +15,6 @@ public class BrandMiage {
     @Enumerated(EnumType.STRING)
     private BrandType type;
 
-    //@OneToMany(mappedBy = "brand")
-    //private Set<ProductEntity> product;
-
     @ManyToOne
     private ProductEntity product;
-
-    //Je ne comprend pas avec le cours a revoir pourquoi on a inverser ManytoOne avec OneToMAny
 }

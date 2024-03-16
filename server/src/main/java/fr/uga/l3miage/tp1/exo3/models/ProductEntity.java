@@ -13,10 +13,7 @@ public class ProductEntity {
     private String name;
     private boolean consumable;
 
-    //@ManyToOne
-    //private BrandMiage brand;
 
-    //Je ne comprend pas avec le cours a revoir
     @OneToMany(mappedBy = "brand")
     private Set<ProductEntity> product;
 }
